@@ -15,7 +15,7 @@ export function Nav() {
             OSS
           </Link>
           <Link
-            href="https://github.com/marketplace/armor-bot"
+            href="https://github.com/apps/armor-review-bot/installations/new"
             target="_blank"
             className="rounded-md bg-accent px-3 py-1.5 font-semibold text-bg hover:bg-accent-soft hover:text-white"
           >
