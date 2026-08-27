@@ -38,10 +38,16 @@ Ya tenés el patrón de armor.dev — usar mismo project si querés o crear nuev
 2. SQL Editor → paste `supabase-schema.sql` → Run (confirmar el modal "destructive")
 3. Settings → API Keys → copiá el publishable + secret keys
 
-## 🔧 Paso 3 — Anthropic API key (2 min)
+## 🔧 Paso 3 — Google AI Studio API key (2 min · GRATIS · sin tarjeta)
 
-1. https://console.anthropic.com/settings/keys
-2. Create key → copiá → `ANTHROPIC_API_KEY`
+Usamos **Gemini 3.7 Flash** para las reviews. Free tier: 1500 requests/día + 1M tokens/día — más que suficiente para el MVP.
+
+1. https://aistudio.google.com/app/apikey
+2. Sign in con cuenta Google
+3. **"Create API key"** → seleccioná un proyecto existente o "Create new project"
+4. Copiá el key (empieza con `AIza...`) → será `GOOGLE_AI_API_KEY`
+
+Si al futuro querés swap a Claude o GPT-5 para mejor calidad, dejamos preparado el toggle en v0.2.
 
 ## 🔧 Paso 4 — Deploy a Vercel (5 min)
 
@@ -56,7 +62,7 @@ Después agregá todas las env vars via `vercel env add` (o dashboard):
 printf "1234567" | vercel env add GITHUB_APP_ID production --scope tequilera-barranca-s-projects
 printf "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----" | vercel env add GITHUB_APP_PRIVATE_KEY production --scope tequilera-barranca-s-projects
 printf "your-webhook-secret" | vercel env add GITHUB_WEBHOOK_SECRET production --scope tequilera-barranca-s-projects
-printf "sk-ant-xxxx" | vercel env add ANTHROPIC_API_KEY production --scope tequilera-barranca-s-projects
+printf "AIza-xxxx" | vercel env add GOOGLE_AI_API_KEY production --scope tequilera-barranca-s-projects
 printf "https://xxx.supabase.co" | vercel env add NEXT_PUBLIC_SUPABASE_URL production --scope tequilera-barranca-s-projects
 printf "sb_publishable_xxx" | vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY production --scope tequilera-barranca-s-projects
 printf "sb_secret_xxx" | vercel env add SUPABASE_SERVICE_ROLE_KEY production --scope tequilera-barranca-s-projects

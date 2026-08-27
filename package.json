@@ -12,8 +12,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.32.1",
     "@carlosfevernova/mcp-armor": "^0.1.0",
+    "@google/generative-ai": "^0.24.1",
     "@octokit/auth-app": "^7.1.1",
     "@octokit/rest": "^21.0.2",
     "@octokit/webhooks": "^13.4.1",

@@ -36,7 +36,7 @@ export function Footer() {
         </div>
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
           <p>&copy; 2026 armor-bot. All rights reserved.</p>
-          <p>Powered by Claude · Built on the Armor Family.</p>
+          <p>AI-powered · Built on the Armor Family.</p>
         </div>
       </div>
     </footer>

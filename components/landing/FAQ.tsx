@@ -9,15 +9,15 @@ const ITEMS = [
   },
   {
     q: "Does armor-bot see my code?",
-    a: "armor-bot only sees the diff of the PR, not the full codebase. The diff is sent to Anthropic's Claude with a system prompt and never persisted beyond the finding cache. We don't train on your code — Anthropic's zero-data-retention API is used.",
+    a: "armor-bot only sees the diff of the PR, not the full codebase. The diff is sent to Google Gemini's API with a system prompt and never persisted beyond the finding cache. We don't train on your code.",
   },
   {
     q: "How many false positives should I expect?",
     a: "About 5-8% in our internal benchmark. Every rule is anchored to a specific runtime failure mode, so the false-positive rate is lower than lint-based tools. You can silence individual rules per-repo via .armor-bot.yml.",
   },
   {
-    q: "Can I use my own OpenAI/Gemini/Groq key?",
-    a: "Not in v0.1 — Claude's structured output + code diff generation is meaningfully better than alternatives for this task. We may add BYO-key in v0.2 for teams that want cost control.",
+    q: "What model powers the reviews?",
+    a: "Google Gemini 3.7 Flash by default — free tier eligible, 1M context, native JSON output. In v0.2 you'll be able to bring your own key (Claude, GPT-5, or self-hosted) for higher-signal reviews at cost.",
   },
   {
     q: "What's the config file look like?",
@@ -25,7 +25,7 @@ const ITEMS = [
   },
   {
     q: "How fast is a review?",
-    a: "3-8 seconds for a typical PR (< 200 lines changed). We fetch the diff, filter to relevant files, and stream Claude's analysis in parallel per ruleset.",
+    a: "3-8 seconds for a typical PR (< 200 lines changed). We fetch the diff, filter to relevant files, and stream the model's analysis in parallel per ruleset.",
   },
 ];
 

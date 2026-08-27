@@ -12,3 +12,10 @@ coverage
 AGENTS.md
 CLAUDE.md
 receipts/
+
+.vercel
+
+# Never commit private keys
+.pem
+.private-key*
+.webhook-secret

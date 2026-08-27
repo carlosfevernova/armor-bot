@@ -1,7 +1,7 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import type { Octokit } from "@octokit/rest";
 import { ALL_RULES, buildSystemPrompt, buildUserMessage } from "./prompt";
+import { getReviewModel } from "@/lib/llm";
 
 const FindingSchema = z.object({
   ruleset: z.string(),
@@ -87,8 +87,9 @@ function collectRelevantFiles(
 }
 
 /**
- * Fetch the PR's file list + diff, ask Claude to review it against our ruleset,
- * and return the validated findings.
+ * Fetch the PR's file list + diff, ask the LLM to review it against our ruleset,
+ * and return the validated findings. Uses Google Gemini 3.7 Flash by default —
+ * free tier, 1M context, native JSON output.
  */
 export async function reviewPullRequest(
   octokit: Octokit,
@@ -115,7 +116,7 @@ export async function reviewPullRequest(
     };
   }
 
-  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const model = getReviewModel();
   const systemPrompt = buildSystemPrompt();
   const userMessage = buildUserMessage({
     repo: `${input.owner}/${input.repo}`,
@@ -124,17 +125,14 @@ export async function reviewPullRequest(
     files: relevant,
   });
 
-  const response = await anthropic.messages.create({
-    model: process.env.ANTHROPIC_MODEL ?? "claude-opus-4-7",
-    max_tokens: 4096,
-    system: systemPrompt,
-    messages: [{ role: "user", content: userMessage }],
+  // Gemini uses `systemInstruction` for the system prompt and a single-turn
+  // `generateContent` for the user message. `responseMimeType: application/json`
+  // is set on the model — Gemini emits raw JSON, no code-fence stripping needed.
+  const result = await model.generateContent({
+    systemInstruction: { role: "system", parts: [{ text: systemPrompt }] },
+    contents: [{ role: "user", parts: [{ text: userMessage }] }],
   });
-
-  const text = response.content
-    .filter((c): c is Anthropic.TextBlock => c.type === "text")
-    .map((c) => c.text)
-    .join("");
+  const text = result.response.text();
 
   const findings = parseFindings(text);
   const validatedRuleIds = new Set(ALL_RULES.map((r) => r.id));
@@ -155,9 +153,9 @@ export async function reviewPullRequest(
 }
 
 /**
- * Extract a JSON array from Claude's response even if it wrapped the array in
- * a code fence or added a stray note. Tolerant parser so a formatting hiccup
- * doesn't cost the customer their review.
+ * Extract a JSON array from the model's response even if it wrapped the array
+ * in a code fence or added a stray note. Tolerant parser so a formatting
+ * hiccup doesn't cost the customer their review.
  */
 function parseFindings(text: string): Finding[] {
   const stripped = text.trim();

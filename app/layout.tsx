@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const description =
-  "The GitHub bot that catches the SSRF your human reviewers missed. Continuous PR review for Next.js, Vercel, Supabase and MCP tools. Powered by Claude + the armor family.";
+  "The GitHub bot that catches the SSRF your human reviewers missed. Continuous PR review for Next.js, Vercel, Supabase and MCP tools. AI-powered — built on the armor family.";
 
 export const metadata: Metadata = {
   title: "armor-bot — the senior code reviewer that never sleeps",
