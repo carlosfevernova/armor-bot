@@ -1,0 +1,42 @@
+{
+  "name": "armor-bot",
+  "version": "0.1.0",
+  "description": "The GitHub bot that catches the SSRF your human reviewers missed. Vertical Next.js + Vercel + Supabase + MCP.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "@carlosfevernova/mcp-armor": "^0.1.0",
+    "@octokit/auth-app": "^7.1.1",
+    "@octokit/rest": "^21.0.2",
+    "@octokit/webhooks": "^13.4.1",
+    "@supabase/ssr": "^0.5.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "js-yaml": "^4.1.0",
+    "next": "16.3.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "vercel-armor": "^0.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "20.14.0",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "5.6.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

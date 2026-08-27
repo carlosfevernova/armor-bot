@@ -1,0 +1,60 @@
+import type { RuleDefinition } from "../prompt";
+
+export const SUPABASE_RULES: readonly RuleDefinition[] = [
+  {
+    id: "supabase/table-no-rls",
+    ruleset: "supabase",
+    severity: "high",
+    what: "SQL migration creates a table in `public` schema without `alter table ... enable row level security` immediately after.",
+    why: "Table is fully readable/writable by any authenticated user via the Data API. Data leak on first deploy.",
+    fix: "Add `alter table public.<name> enable row level security;` right after the `create table`.",
+  },
+  {
+    id: "supabase/policy-uses-uid-no-user-column",
+    ruleset: "supabase",
+    severity: "high",
+    what: "RLS policy uses `auth.uid()` in `USING` clause but the referenced table has no `user_id` column.",
+    why: "The policy always evaluates to `null` = false, and no user can read anything. Silent 200 with empty array — hard to debug.",
+    fix: "Add a `user_id uuid not null` column and populate it via a trigger from `auth.uid()`, or restructure the policy to use a join.",
+  },
+  {
+    id: "supabase/service-role-imported-client",
+    ruleset: "supabase",
+    severity: "high",
+    what: "File exports a Supabase client created with `SUPABASE_SERVICE_ROLE_KEY` and is imported by a Client Component or `page.tsx` in the browser bundle.",
+    why: "Full DB access exposed to the browser. Immediate credential leak.",
+    fix: "Split into `lib/supabase/{client,server}.ts` — the service-role client stays in `server.ts`, imported only by route handlers.",
+  },
+  {
+    id: "supabase/no-index-rls-query",
+    ruleset: "supabase",
+    severity: "medium",
+    what: "New table has an RLS policy filtering by `user_id` but no index on `user_id`.",
+    why: "Every query does a full table scan filtered by RLS. Cost + latency explodes past 10K rows.",
+    fix: "Add `create index on public.<name> (user_id);` (or a composite index if you also filter by date).",
+  },
+  {
+    id: "supabase/realtime-new-sb-key",
+    ruleset: "supabase",
+    severity: "medium",
+    what: "Code imports `.channel(...).on('postgres_changes', ...)` while using an `sb_publishable_*` (new-format) API key.",
+    why: "Documented gotcha: new-format keys break Realtime subscriptions silently. `SUBSCRIBED` fires but no events arrive.",
+    fix: "For Realtime, use the legacy JWT anon key. Track the migration in `SUPABASE_LEGACY_ANON_KEY` env var.",
+  },
+  {
+    id: "supabase/select-star-in-server",
+    ruleset: "supabase",
+    severity: "low",
+    what: "Query uses `.select('*')` in a route handler that returns data to the client.",
+    why: "Over-fetching. Adds columns to the API response when the schema grows — potentially leaking new sensitive columns.",
+    fix: "Enumerate columns: `.select('id, name, created_at')`.",
+  },
+  {
+    id: "supabase/webhook-uses-anon",
+    ruleset: "supabase",
+    severity: "high",
+    what: "Stripe/GitHub/other-service webhook handler uses the anon client (browser) instead of the service-role client.",
+    why: "Writes are blocked by RLS. Silent partial state — subscription record never gets created.",
+    fix: "Use `createSupabaseServiceRole()` in webhook handlers.",
+  },
+];

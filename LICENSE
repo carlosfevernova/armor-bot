@@ -1,0 +1,20 @@
+Copyright (c) 2026 Carlos F. Vernova
+
+All rights reserved. This is proprietary software.
+
+The `armor-bot` service source is available for reference and self-hosting
+under the following terms:
+
+1. You may run this software for personal, non-commercial use.
+2. Commercial use (offering the service, or any derivative, to third parties
+   for payment or in-kind exchange) requires a commercial license from the
+   copyright holder. Contact: carlosfevernova@hotmail.com.
+3. Contributions submitted to this repository are licensed to the copyright
+   holder under the same terms as this notice.
+
+This is NOT an OSI-approved open source license. It is source-available.
+
+For the open-source foundations that power this service, see:
+- vercel-armor: https://github.com/carlosfevernova/vercel-armor (MIT)
+- mcp-armor:   https://github.com/carlosfevernova/mcp-armor (MIT)
+- skill-kit:   https://github.com/carlosfevernova/skill-kit (MIT)

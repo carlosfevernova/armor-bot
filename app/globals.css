@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: #0a0a0a;
+  color: #ededed;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-halo::before {
+  content: "";
+  position: absolute;
+  inset: -20% -20% auto -20%;
+  height: 60vh;
+  background: radial-gradient(ellipse at 50% 0%, rgba(167, 139, 250, 0.20), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+.grid-backdrop {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+kbd {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.85em;
+  color: #d4d4d4;
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(134, 239, 172, 0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(134, 239, 172, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(134, 239, 172, 0); }
+}
+.pulse-ring { animation: pulse-ring 2s ease-out infinite; }
+
+/* PR comment mockup styles for the hero screenshot */
+.pr-comment {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  color: #c9d1d9;
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 13px;
+}
+.pr-severity-high {
+  background: rgba(248, 81, 73, 0.15);
+  color: #ff7b72;
+  border: 1px solid rgba(248, 81, 73, 0.4);
+}
+.pr-severity-medium {
+  background: rgba(210, 153, 34, 0.15);
+  color: #d29922;
+  border: 1px solid rgba(210, 153, 34, 0.4);
+}
