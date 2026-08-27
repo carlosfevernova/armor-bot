@@ -16,7 +16,7 @@ export function getGemini(): GoogleGenerativeAI {
  * free tier + 1M context + native structured output. Override with GEMINI_MODEL
  * env var (e.g., `gemini-3.7-pro` for higher quality on paid).
  */
-export const DEFAULT_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
+export const DEFAULT_MODEL = process.env.GEMINI_MODEL ?? "gemini-3.6-flash";
 
 /**
  * Build the model handle. We rebind per-request to pick up config changes cleanly.
