@@ -18,7 +18,7 @@ export function Footer() {
           <FooterCol title="Product" links={[
             ["Pricing", "#pricing"],
             ["FAQ", "#faq"],
-            ["Install", "https://github.com/marketplace/armor-bot"],
+            ["Install", "https://github.com/apps/armor-review-bot/installations/new"],
             ["Changelog", "/changelog"],
           ]} />
           <FooterCol title="Armor Family" links={[

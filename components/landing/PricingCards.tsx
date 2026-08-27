@@ -14,7 +14,7 @@ const TIERS = [
       "Public repo badge",
     ],
     cta: "Install free",
-    href: "https://github.com/marketplace/armor-bot",
+    href: "https://github.com/apps/armor-review-bot/installations/new",
     highlight: false,
   },
   {

@@ -28,7 +28,7 @@ export function Hero() {
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href="https://github.com/marketplace/armor-bot"
+              href="https://github.com/apps/armor-review-bot/installations/new"
               target="_blank"
               className="rounded-md bg-accent px-6 py-3 font-semibold text-bg hover:bg-accent-soft hover:text-white"
             >
